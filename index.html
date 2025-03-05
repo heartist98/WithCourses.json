@@ -34,6 +34,13 @@
             <p class="card-body">Tell us about your education</p>
         </div>
 
+        <div class="card" id="courses">
+    <p class="card-header">Courses Taken</p>
+    <div class="card-body" id="courses-list">
+        <!-- Courses will be dynamically loaded here -->
+    </div>
+</div>
+
         <div class="card" id="skills">
             <p class="card-header">Skills</p>
             <p class="card-body">Tell us about your IT Skills</p>
@@ -68,5 +75,28 @@
     <footer class="box">
         <p>I am a footer the last section of this page</p>
     </footer>
+
+  <script>
+        fetch('https://your-github-username.github.io/your-repo-name/courses.json')
+            .then(response => response.json())
+            .then(data => {
+                const coursesList = document.getElementById('courses-list');
+                for (const [semester, courses] of Object.entries(data)) {
+                    const semesterHeader = document.createElement('h3');
+                    semesterHeader.textContent = semester.replace(/_/g, ' ');
+                    coursesList.appendChild(semesterHeader);
+    
+                    const courseList = document.createElement('ul');
+                    courses.forEach(course => {
+                        const courseItem = document.createElement('li');
+                        courseItem.textContent = course;
+                        courseList.appendChild(courseItem);
+                    });
+                    coursesList.appendChild(courseList);
+                }
+            })
+            .catch(error => console.error('Error fetching courses:', error));
+    </script>
+
 </body>
 </html>
